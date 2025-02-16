@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Frontend') {
+            steps {
+                script {
+                    sh 'docker build -t your-dockerhub-username/frontend:latest ./app/frontend'
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                script {
+                    sh 'docker build -t your-dockerhub-username/backend:latest ./app/backend'
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh 'kubectl apply -f k8s/'
+                }
+            }
+        }
+    }
+}
